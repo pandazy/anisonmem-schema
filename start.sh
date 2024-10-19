@@ -46,9 +46,12 @@ fi
 cd ..
 
 echo "Starting the backend server..."
-nohup python admin_app.py > admin_app.log 2>&1 &
+python admin_app.py >logs/admin_app.log 2>&1 &
+sleep 1
+lsof -i :5000 | grep python | awk '{print "backend:", $2}' >logs/app.pid
+
 cd admin-ui
 echo "Starting the frontend server..."
-nohup bun run dev > admin_ui.log 2>&1 &
-
-
+bun vite >../logs/bun-run.log 2>&1 &
+sleep 1
+lsof -i :5001 | grep bun | awk '{print "ui:", $2}' >>../logs/app.pid

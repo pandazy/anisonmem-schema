@@ -167,3 +167,5 @@ node_modules
 
 # local database
 conversion_config.db
+logs/app.pid
+

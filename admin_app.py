@@ -1,20 +1,18 @@
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import jankenschema
 from admin_curd import (
     connect,
-    connect_by_path,
     get_one,
     init_db,
     get_all,
     add,
     remove,
 )
-from extract_schema import write_schemas
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5001"])
-
+CORS(app, origins=["http://127.0.0.1:5001"])
 
 with app.app_context():
     init_db()
@@ -72,10 +70,11 @@ def run_conversion(id: int):
         err = verify_conversion_paths_of(conversion)
         if err:
             return jsonify({"message": err}), 400
-        with connect_by_path(conversion["db_path"]) as dest_conn:
-            write_schemas(
-                dest_conn.cursor(), conversion["schema_path"], conversion["code_type"]
-            )
+        jankenschema.generate_code(
+            conversion["db_path"],
+            conversion["schema_path"],
+            conversion["code_type"],
+        )
     return jsonify({"message": "Conversion completed!"})
 
 
