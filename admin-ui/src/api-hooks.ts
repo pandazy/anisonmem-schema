@@ -5,7 +5,7 @@ import {
 	useQueryClient,
 } from '@tanstack/react-query';
 
-const SERVER = 'http://127.0.0.1:5000';
+const SERVER = 'http://127.0.0.1:5042';
 
 export type CodeType = 'rs' | 'ts';
 

@@ -48,7 +48,7 @@ cd ..
 echo "Starting the backend server..."
 python admin_app.py >logs/admin_app.log 2>&1 &
 sleep 1
-lsof -i :5000 | grep python | awk '{print "backend:", $2}' >logs/app.pid
+lsof -i :5042 | grep python | awk '{print "backend:", $2}' >logs/app.pid
 
 cd admin-ui
 echo "Starting the frontend server..."
